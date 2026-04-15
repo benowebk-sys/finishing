@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finishing</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@300;400;600&family=Noto+Sans+Arabic:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --weaving-accent: #d4af37;
+            --success: #27ae60;
+            --error: #c0392b;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+            background: radial-gradient(circle at top, rgba(255,255,255,0.03), transparent 18%),
+                        radial-gradient(circle at bottom right, rgba(212,175,55,0.06), transparent 15%),
+                        linear-gradient(180deg, #05070f 0%, #070b14 45%, #03050a 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cinematic-header {
+            background: rgba(8, 12, 20, 0.94);
+            background-image: radial-gradient(circle at top left, rgba(212,175,55,0.12), transparent 25%);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .material-title {
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+            letter-spacing: 0.05em;
+        }
+
+        .glass-card {
+            background: rgba(11, 17, 31, 0.90);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            box-shadow: 0 30px 65px rgba(0, 0, 0, 0.35);
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255,255,255,0.18);
+        }
+
+        /* Glassy Success Style */
+        .btn-correct { 
+            background: rgba(39, 174, 96, 0.28) !important; 
+            border-color: rgba(46, 204, 113, 0.55) !important; 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white !important;
+            box-shadow: 0 0 18px rgba(39, 174, 96, 0.24);
+        }
+
+        /* Glassy Error Style */
+        .btn-wrong { 
+            background: rgba(192, 57, 43, 0.28) !important; 
+            border-color: rgba(231, 76, 60, 0.55) !important; 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white !important;
+            box-shadow: 0 0 18px rgba(192, 57, 43, 0.24);
+        }
+
+        /* Enhanced Progress Bar Container */
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .progress-bar-wrapper {
+            height: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, rgba(245,158,11,0.95), rgba(252,211,77,0.95), rgba(249,115,22,0.95));
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 24px rgba(249, 115, 22, 0.35);
+        }
+
+        .arabic-text {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            display: block;
+            margin-top: 0.15rem;
+            opacity: 0.8;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 640px) {
+            .nav-text { display: inline-block; } 
+            #qText { font-size: 1rem; }
+            .option-btn { padding: 0.65rem; }
+            .nav-btn-container { padding: 0.5rem 0.75rem; }
+        }
+    </style>
+</head>
+<body class="flex flex-col">
+
+    <!-- Header -->
+    <header class="cinematic-header py-3 px-4 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="material-title text-lg md:text-2xl font-bold text-yellow-500 uppercase">Finishing</h1>
+            <div class="flex flex-col items-end">
+                <div class="text-[10px] md:text-xs opacity-60 font-mono bg-white/5 px-2 py-1 rounded border border-white/10 mb-1" id="progressText">
+                    Q 1 / 134
+                </div>
+                <div id="percentageLabel" class="text-[10px] font-bold text-yellow-500/80">0%</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Percentage Progress Bar -->
+    <div class="progress-container">
+        <div class="max-w-4xl mx-auto">
+            <div class="progress-bar-wrapper">
+                <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main class="flex-grow flex items-center justify-center p-3 md:p-6">
+        <div id="quizContainer" class="w-full max-w-xl">
+            <div class="flex justify-end mb-2">
+                <button id="hintBtn" class="p-2 bg-yellow-500/10 text-yellow-500 rounded-full border border-yellow-500/20" title="Show Hint">
+                    <i data-lucide="lightbulb" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="glass-card p-5 md:p-8 relative">
+                <div id="hintBox" class="hidden mb-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded text-[11px] md:text-sm italic text-yellow-200">
+                    <div id="hintContent"></div>
+                </div>
+
+                <div id="questionArea">
+                    <span id="qType" class="text-[9px] uppercase tracking-widest text-yellow-500/60 font-bold mb-1 block"></span>
+                    <h2 id="qText" class="font-light leading-snug mb-5 text-white"></h2>
+                    <div id="optionsGrid" class="grid grid-cols-1 gap-2"></div>
+                </div>
+
+                <div class="flex justify-between items-center mt-6 border-t border-white/5 pt-5">
+                    <button id="prevBtn" onclick="prevQuestion()" class="nav-btn-container flex items-center gap-1.5 px-3 py-2 rounded bg-white/5 text-xs disabled:opacity-20">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i> <span class="nav-text">Back/السابق</span>
+                    </button>
+                    <div class="flex gap-2">
+                        <button onclick="skipQuestion()" class="px-3 py-2 rounded border border-white/5 text-[10px] opacity-50">Skip/تخطي</button>
+                        <button id="nextBtn" onclick="nextQuestion()" class="nav-btn-container flex items-center gap-1.5 px-5 py-2 rounded bg-yellow-600 text-white font-bold text-xs">
+                            <span class="nav-text">Next/التالي</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="resultScreen" class="hidden w-full max-w-md text-center glass-card p-8">
+            <i data-lucide="award" class="w-12 h-12 text-yellow-500 mx-auto mb-4"></i>
+            <h2 class="text-xl font-bold mb-1">Assessment Complete</h2>
+            <p class="text-[10px] text-gray-500 mb-6">نهايه الاختبار</p>
+            <div class="text-5xl font-bold text-yellow-500 mb-2" id="finalScore">0%</div>
+            <div class="grid grid-cols-2 gap-2 mt-6">
+                <div class="p-3 bg-green-500/5 border border-green-500/10 rounded">
+                    <div id="correctCount" class="text-green-500 font-bold">0</div>
+                    <div class="text-[9px] opacity-50 uppercase">Correct</div>
+                </div>
+                <div class="p-3 bg-red-500/5 border border-red-500/10 rounded">
+                    <div id="wrongCount" class="text-red-500 font-bold">0</div>
+                    <div class="text-[9px] opacity-50 uppercase">Wrong</div>
+                </div>
+            </div>
+            <button onclick="restartQuiz()" class="mt-8 bg-yellow-600 text-white px-8 py-2 rounded-full text-xs font-bold">Restart</button>
+        </div>
+    </main>
+
+    <footer class="py-4 text-center border-t border-white/5 bg-black/20">
+        <p class="text-gray-500 text-[13px] font-medium">By <span class="text-yellow-500/60">Developer Bilal Mohammed</span></p>
+    </footer>
+
+    <script>
+        const rawData = [
+            // --- 70 True & False Questions ---
+            {type:'tf',q:'Processing cotton in yarn form is more common than in fabric form.',a:'False',q_ar:'معالجة القطن في شكل خيوط هي أكثر شيوعاً من شكل القماش.',a_ar:'خطأ'},
+            {type:'tf',q:'Lot uniformity (width & weight) is essential for consistent chemical processing.',a:'True',q_ar:'توحيد الدفعة (العرض والوزن) ضروري لمعالجة كيميائية متسقة.',a_ar:'صح'},
+            {type:'tf',q:'Seam strength has no effect on continuous processing operations.',a:'False',q_ar:'قوة الوصلة ليس لها تأثير على عمليات المعالجة المستمرة.',a_ar:'خطأ'},
+            {type:'tf',q:'Bonding using polymers eliminates mechanical stress caused by stitching.',a:'True',q_ar:'الربط باستخدام البوليمرات يزيل الإجهاد الميكانيكي الناتج عن الخياطة.',a_ar:'صح'},
+            {type:'tf',q:'Improper inspection can lead to defects during bleaching and dyeing stages.',a:'True',q_ar:'التفتيش غير السليم قد يؤدي إلى عيوب خلال مراحل التبييض والصباغة.',a_ar:'صح'},
+            {type:'tf',q:'Electronic inspection completely eliminates the need for human supervision.',a:'False',q_ar:'التفتيش الإلكتروني يزيل تماماً الحاجة للإشراف البشري.',a_ar:'خطأ'},
+            {type:'tf',q:'Non-scourable oils interfere with dye-fiber interaction.',a:'True',q_ar:'الزيوت غير القابلة للإزالة تتداخل مع تفاعل الصبغة والألياف.',a_ar:'صح'},
+            {type:'tf',q:'Cutting damaged areas is always avoided to reduce material loss.',a:'False',q_ar:'يتم دائماً تجنب قطع المناطق التالفة لتقليل فقد المواد.',a_ar:'خطأ'},
+            {type:'tf',q:'Fluorescent lighting enhances visibility of fabric defects.',a:'True',q_ar:'الإضاءة الفلورية تعزز من وضوح عيوب القماش.',a_ar:'صح'},
+            {type:'tf',q:'Spotting should be followed by drying before washing to fix the stain remover.',a:'False',q_ar:'يجب أن يتبع إزالة البقع التجفيف قبل الغسيل لتثبيت مزيل البقع.',a_ar:'خطأ'},
+            {type:'tf',q:'Uniform lot formation minimizes variation in chemical uptake during processing.',a:'True',q_ar:'تكوين دفعة موحدة يقلل من التباين في امتصاص المواد الكيميائية أثناء المعالجة.',a_ar:'صح'},
+            {type:'tf',q:'Sewing seams too narrow may lead to failure during tension processes.',a:'True',q_ar:'خياطة الوصلات الضيقة جداً قد تؤدي إلى فشلها خلال عمليات الشد.',a_ar:'صح'},
+            {type:'tf',q:'Polymer bonding increases rag formation compared to stitching.',a:'False',q_ar:'الربط بالبوليمر يزيد من تكوين الخرق مقارنة بالخياطة.',a_ar:'خطأ'},
+            {type:'tf',q:'Inspection under insufficient light may hide critical fabric defects.',a:'True',q_ar:'التفتيش تحت ضوء غير كافٍ قد يخفي عيوب القماش الحرجة.',a_ar:'صح'},
+            {type:'tf',q:'Cutting heavily damaged areas is sometimes necessary despite material loss.',a:'True',q_ar:'قطع المناطق المتضررة بشدة ضروري أحياناً رغم فقدان المواد.',a_ar:'صح'},
+            {type:'tf',q:'Oily stains can lead to localized weak spots during bleaching.',a:'True',q_ar:'يمكن أن تؤدي البقع الزيتية إلى نقاط ضعف موضعية أثناء التبييض.',a_ar:'صح'},
+            {type:'tf',q:'Electronic inspection ensures zero defects in final fabric.',a:'False',q_ar:'التفتيش الإلكتروني يضمن خلو القماش النهائي من العيوب.',a_ar:'خطأ'},
+            {type:'tf',q:'Similar fabric weight in a lot ensures uniform drying rate.',a:'True',q_ar:'وزن القماش المتماثل في الدفعة يضمن معدل تجفيف موحد.',a_ar:'صح'},
+            {type:'tf',q:'The purpose of mending is only aesthetic improvement.',a:'False',q_ar:'الغرض من الترقيع هو التحسين الجمالي فقط.',a_ar:'خطأ'},
+            {type:'tf',q:'Emulsified solvents improve removal of hydrophobic contaminants.',a:'True',q_ar:'المذيبات المستحلبة تحسن إزالة الملوثات الطاردة للماء.',a_ar:'صح'},
+            {type:'tf',q:'Protruding fibers improve dye penetration during dyeing processes.',a:'False',q_ar:'الألياف البارزة تحسن اختراق الصبغة أثناء عمليات الصباغة.',a_ar:'خطأ'},
+            {type:'tf',q:'Shearing is used to remove surface fibers from fabric.',a:'True',q_ar:'يستخدم القص (Shearing) لإزالة الألياف السطحية من القماش.',a_ar:'صح'},
+            {type:'tf',q:'Shearing is always performed on fully wet fabrics.',a:'False',q_ar:'يتم القص دائماً على الأقمشة المبللة تماماً.',a_ar:'خطأ'},
+            {type:'tf',q:'The shearing mechanism is similar to a lawn mower.',a:'True',q_ar:'آلية القص تشبه جزازة العشب.',a_ar:'صح'},
+            {type:'tf',q:'Cylinder speed in shearing machines is always constant.',a:'False',q_ar:'سرعة الأسطوانة في آلات القص ثابتة دائماً.',a_ar:'خطأ'},
+            {type:'tf',q:'Modern shearing machines may have asymmetrical spiral arrangements.',a:'True',q_ar:'آلات القص الحديثة قد تحتوي على ترتيبات لولبية غير متماثلة.',a_ar:'صح'},
+            {type:'tf',q:'Spiral blades are aligned in the same direction as cylinder rotation.',a:'False',q_ar:'تتم محاذاة الشفرات اللولبية في نفس اتجاه دوران الأسطوانة.',a_ar:'خطأ'},
+            {type:'tf',q:'Increasing cutting angle improves cutting precision.',a:'False',q_ar:'زيادة زاوية القطع تحسن من دقة القص.',a_ar:'خطأ'},
+            {type:'tf',q:'Ledger blade hardness is usually higher than spiral blades.',a:'False',q_ar:'صلابة نصل (Ledger blade) عادة ما تكون أعلى من الشفرات اللولبية.',a_ar:'خطأ'},
+            {type:'tf',q:'Wear of the ledger blade is economically advantageous.',a:'True',q_ar:'تآكل نصل (Ledger blade) مفيد اقتصادياً.',a_ar:'صح'},
+            {type:'tf',q:'Seam joints can safely pass under the shearing device.',a:'False',q_ar:'يمكن لوصلات الدرزة المرور بأمان تحت جهاز القص.',a_ar:'خطأ'},
+            {type:'tf',q:'Seam sensors prevent damage during shearing.',a:'True',q_ar:'حساسات الوصلة تمنع الضرر أثناء القص.',a_ar:'صح'},
+            {type:'tf',q:'Brushes before and after shearing perform identical functions.',a:'False',q_ar:'الفرش قبل وبعد القص تؤدي وظائف متطابقة.',a_ar:'خطأ'},
+            {type:'tf',q:'Vacuum systems only clean the machine without affecting fabric quality.',a:'False',q_ar:'أنظمة الشفط تنظف الماكينة فقط دون التأثير على جودة القماش.',a_ar:'خطأ'},
+            {type:'tf',q:'Shearing reduces microbeads in polyester fabrics.',a:'True',q_ar:'القص يقلل من الخرزات الدقيقة في أقمشة البوليستر.',a_ar:'صح'},
+            {type:'tf',q:'Fabric thickness has no effect on shear height adjustment.',a:'False',q_ar:'سمك القماش ليس له أي تأثير على ضبط ارتفاع القص.',a_ar:'خطأ'},
+            {type:'tf',q:'Eccentric cylinder movement can cause uneven shearing.',a:'True',q_ar:'حركة الأسطوانة اللامركزية يمكن أن تسبب قصاً غير متساوٍ.',a_ar:'صح'},
+            {type:'tf',q:'Modern shearing machines are fully manual.',a:'False',q_ar:'آلات القص الحديثة يدوية بالكامل.',a_ar:'خطأ'},
+            {type:'tf',q:'Scratching cotton fabric during shearing may cause dyeing defects.',a:'True',q_ar:'خدش قماش القطن أثناء القص قد يسبب عيوباً في الصباغة.',a_ar:'صح'},
+            {type:'tf',q:'Increasing fabric speed always improves shearing efficiency.',a:'False',q_ar:'زيادة سرعة القماش يحسن دائماً كفاءة القص.',a_ar:'خطأ'},
+            {type:'tf',q:'Singeing removes protruding fibers to improve fabric smoothness.',a:'True',q_ar:'الغناء (Singeing) يزيل الألياف البارزة لتحسين نعومة القماش.',a_ar:'صح'},
+            {type:'tf',q:'Only cotton fabrics require singeing; synthetic fabrics are not singed.',a:'False',q_ar:'أقمشة القطن فقط تتطلب الغناء؛ الأقمشة الاصطناعية لا يتم غناؤها.',a_ar:'خطأ'},
+            {type:'tf',q:'Protruding fibers can obstruct dyeing and printing processes.',a:'True',q_ar:'الألياف البارزة يمكن أن تعيق عمليات الصباغة والطباعة.',a_ar:'صح'},
+            {type:'tf',q:'Double singeing may be used to minimize pilling in polyester blends.',a:'True',q_ar:'الغناء المزدوج قد يستخدم لتقليل التنسيل في مخاليط البوليستر.',a_ar:'صح'},
+            {type:'tf',q:'Passing fabric over heated cylinders while wet improves singeing results.',a:'False',q_ar:'تمرير القماش فوق أسطوانات ساخنة وهو مبلل يحسن نتائج الغناء.',a_ar:'خطأ'},
+            {type:'tf',q:'Improper singeing may cause loss of tensile strength in warp direction.',a:'True',q_ar:'الغناء غير السليم قد يسبب فقدان قوة الشد في اتجاه السداء.',a_ar:'صح'},
+            {type:'tf',q:'In gas singeing, a steam buffer can hinder the operation.',a:'True',q_ar:'في غناء الغاز، الحاجز البخاري يمكن أن يعيق العملية.',a_ar:'صح'},
+            {type:'tf',q:'Polyester ignites at a higher temperature than it melts.',a:'True',q_ar:'البوليستر يشتعل عند درجة حرارة أعلى من درجة انصهاره.',a_ar:'صح'},
+            {type:'tf',q:'All singeing machines use the same method of flame application.',a:'False',q_ar:'جميع آلات الغناء تستخدم نفس طريقة تطبيق اللهب.',a_ar:'خطأ'},
+            {type:'tf',q:'Quench boxes extinguish sparks after singeing to prevent fabric damage.',a:'True',q_ar:'صناديق الإطفاء تخمد الشرر بعد الغناء لمنع تلف القماش.',a_ar:'صح'},
+            {type:'tf',q:'Desizing is the process of removing sizing materials from warp threads after weaving.',a:'True',q_ar:'إزالة البوش هي عملية إزالة مواد البوش من خيوط السداء بعد النسيج.',a_ar:'صح'},
+            {type:'tf',q:'Starch and gelatin are examples of synthetic sizing agents.',a:'False',q_ar:'النشا والجيلاتين أمثلة على مواد البوش الاصطناعية.',a_ar:'خطأ'},
+            {type:'tf',q:'Enzymatic desizing is preferred because it does not damage cellulose fibers.',a:'True',q_ar:'إزالة البوش الإنزيمية مفضلة لأنها لا تتلف ألياف السليلوز.',a_ar:'صح'},
+            {type:'tf',q:'Mineral acids are completely safe for cotton fibers during desizing.',a:'False',q_ar:'الأحماض المعدنية آمنة تماماً لألياف القطن أثناء إزالة البوش.',a_ar:'خطأ'},
+            {type:'tf',q:'Oxidation desizing using sodium bromate can hydrolyze starch at room temperature.',a:'True',q_ar:'إزالة البوش بالأكسدة باستخدام برومات الصوديوم يمكن أن تحلل النشا في درجة حرارة الغرفة.',a_ar:'صح'},
+            {type:'tf',q:'Alkali after-treatment is sometimes required after oxidation desizing.',a:'True',q_ar:'المعالجة القلوية اللاحقة مطلوبة أحياناً بعد إزالة البوش بالأكسدة.',a_ar:'صح'},
+            {type:'tf',q:'Pectin must be removed during scouring to improve absorption and dyeing.',a:'True',q_ar:'يجب إزالة البكتين أثناء التنظيف لتحسين الامتصاص والصباغة.',a_ar:'صح'},
+            {type:'tf',q:'Cotton requires mild alkaline treatment compared to wool and silk.',a:'False',q_ar:'يتطلب القطن معالجة قلوية خفيفة مقارنة بالصوف والحرير.',a_ar:'خطأ'},
+            {type:'tf',q:'Continuous bleaching processes may be affected by the presence of mineral salts.',a:'True',q_ar:'عمليات التبييض المستمرة قد تتأثر بوجود الأملاح المعدنية.',a_ar:'صح'},
+            {type:'tf',q:'Hydrogen peroxide is a safe alternative to chlorine compounds in bleaching.',a:'True',q_ar:'بيروكسيد الهيدروجين هو بديل آمن لمركبات الكلور في التبييض.',a_ar:'صح'},
+            {type:'tf',q:'Synthetic fibers require aggressive scouring with high alkali concentrations.',a:'False',q_ar:'تتطلب الألياف الاصطناعية تنظيفاً قوياً بتركيزات قلوية عالية.',a_ar:'خطأ'},
+            {type:'tf',q:'Thermal stabilization is sometimes necessary for synthetic fibers to achieve high whiteness.',a:'True',q_ar:'التثبيت الحراري ضروري أحياناً للألياف الاصطناعية لتحقيق بياض عالٍ.',a_ar:'صح'},
+            {type:'tf',q:'Wool and silk are sensitive to strong alkalis and require mild bleaching.',a:'True',q_ar:'الصوف والحرير حساسان للقلويات القوية ويتطلبان تبييضاً خفيفاً.',a_ar:'صح'},
+            {type:'tf',q:'Mercerization is carried out using hot caustic soda and high tension.',a:'False',q_ar:'تتم عملية المرسرة باستخدام الصودا الكاوية الساخنة والشد العالي.',a_ar:'خطأ'},
+            {type:'tf',q:'Mercerization increases fiber cross-section and gives a circular shape.',a:'True',q_ar:'المرسرة تزيد من المقطع العرضي للألياف وتعطيها شكلاً دائرياً.',a_ar:'صح'},
+            {type:'tf',q:'The polymer chains in cotton become more organized after mercerization.',a:'True',q_ar:'تصبح سلاسل البوليمر في القطن أكثر تنظيماً بعد المرسرة.',a_ar:'صح'},
+            {type:'tf',q:'Mercerized cotton fibers shrink longitudinally by approximately 20-25%.',a:'True',q_ar:'ألياف القطن المرسيرا تنكمش طولياً بنسبة 20-25% تقريباً.',a_ar:'صح'},
+            {type:'tf',q:'Preparation of grey fabrics does not require removing impurities or ensuring absorption.',a:'False',q_ar:'تحضير الأقمشة الرمادية لا يتطلب إزالة الشوائب أو ضمان الامتصاص.',a_ar:'خطأ'},
+            {type:'tf',q:'High degrees of whiteness are necessary for all grey fabric preparations.',a:'False',q_ar:'درجات البياض العالية ضرورية لجميع تحضيرات الأقمشة الرمادية.',a_ar:'خطأ'},
+            {type:'tf',q:'Proper scouring and preparation increase fabric interaction with dyes and chemicals.',a:'True',q_ar:'التنظيف والتحضير السليم يزيدان من تفاعل القماش مع الأصباغ والمواد الكيميائية.',a_ar:'صح'},
+
+            // --- 64 Multiple Choice Questions ---
+            {type:'mcq',q:'The primary reason for grouping fabrics into lots is:',o:['Reduce cost','Improve aesthetics','Ensure uniform processing conditions','Increase production speed only'],a:'Ensure uniform processing conditions',q_ar:'السبب الرئيسي لتجميع الأقمشة في دفعات هو:',o_ar:['تقليل التكلفة','تحسين الجماليات','ضمان ظروف معالجة موحدة','زيادة سرعة الإنتاج فقط'],a_ar:'ضمان ظروف معالجة موحدة'},
+            {type:'mcq',q:'Increasing seam width in mercerizing is mainly to:',o:['Improve appearance','Resist mechanical tension','Reduce cost','Increase dye uptake'],a:'Resist mechanical tension',q_ar:'زيادة عرض الوصلة في المرسرة يهدف بشكل أساسي إلى:',o_ar:['تحسين المظهر','مقاومة الشد الميكانيكي','تقليل التكلفة','زيادة امتصاص الصبغة'],a_ar:'مقاومة الشد الميكانيكي'},
+            {type:'mcq',q:'Polymer bonding is preferred over stitching because it:',o:['Increases seam visibility','Reduces waste and loose fibers','Requires more labor','Weakens fabric joints'],a:'Reduces waste and loose fibers',q_ar:'يفضل الربط بالبوليمر على الخياطة لأنه:',o_ar:['يزيد من رؤية الوصلة','يقلل الفاقد والألياف السائبة','يتطلب عمالة أكثر','يضعف فواصل القماش'],a_ar:'يقلل الفاقد والألياف السائبة'},
+            {type:'mcq',q:'Failure to remove oil stains leads to:',o:['Better dye fixation','Patchy dyeing','Increased strength','Faster processing'],a:'Patchy dyeing',q_ar:'الفشل في إزالة البقع الزيتية يؤدي إلى:',o_ar:['تثبيت صبغة أفضل','صباغة غير منتظمة (لطش)','زيادة القوة','معالجة أسرع'],a_ar:'صباغة غير منتظمة (لطش)'},
+            {type:'mcq',q:'The role of emulsifier in stain removal is to:',o:['Color the fabric','Break down oils into removable particles','Fix stains','Increase fabric strength'],a:'Break down oils into removable particles',q_ar:'دور المستحلب في إزالة البقع هو:',o_ar:['تلوين القماش','تكسير الزيوت إلى جزيئات قابلة للإزالة','تثبيت البقع','زيادة قوة القماش'],a_ar:'تكسير الزيوت إلى جزيئات قابلة للإزالة'},
+            {type:'mcq',q:'Electronic inspection systems are mainly used to:',o:['Replace dyeing','Detect defects with high precision','Reduce fabric length','Change fabric structure'],a:'Detect defects with high precision',q_ar:'تستخدم أنظمة التفتيش الإلكترونية بشكل أساسي من أجل:',o_ar:['استبدال الصباغة','اكتشاف العيوب بدقة عالية','تقليل طول القماش','تغيير هيكل القماش'],a_ar:'اكتشاف العيوب بدقة عالية'},
+            {type:'mcq',q:'The main risk of weak seams during continuous processing is:',o:['Color change','Fabric breakage inside machines','Increased gloss','Better finishing'],a:'Fabric breakage inside machines',q_ar:'الخطر الرئيسي للوصلات الضعيفة أثناء المعالجة المستمرة هو:',o_ar:['تغير اللون','انكسار القماش داخل الآلات','زيادة اللمعان','تجهيز أفضل'],a_ar:'انكسار القماش داخل الآلات'},
+            {type:'mcq',q:'The inclined glass inspection table helps in:',o:['Increasing fabric speed','Better defect visibility','Reducing cost','Dye fixation'],a:'Better defect visibility',q_ar:'طاولة التفتيش ذات الزجاج المائل تساعد في:',o_ar:['زيادة سرعة القماش','وضوح أفضل للعيوب','تقليل التكلفة','تثبيت الصبغة'],a_ar:'وضوح أفضل للعيوب'},
+            {type:'mcq',q:'If fabric weight varies within a lot, it will mainly affect:',o:['Color only','Mechanical strength only','Uniformity of treatment (wet processing)','Packaging'],a:'Uniformity of treatment (wet processing)',q_ar:'إذا اختلف وزن القماش داخل الدفعة، سيؤثر ذلك بشكل أساسي على:',o_ar:['اللون فقط','القوة الميكانيكية فقط','انتظام المعالجة (المعالجة الرطبة)','التعبئة'],a_ar:'انتظام المعالجة (المعالجة الرطبة)'},
+            {type:'mcq',q:'The major function of fluorescent lighting is to:',o:['Heat the fabric','Highlight defects clearly','Dry the fabric','Reduce chemicals'],a:'Highlight defects clearly',q_ar:'الوظيفة الرئيسية للإضاءة الفلورية هي:',o_ar:['تسخين القماش','إبراز العيوب بوضوح','تجفيف القماش','تقليل المواد الكيميائية'],a_ar:'إبراز العيوب بوضوح'},
+            {type:'mcq',q:'Delayed removal of stain remover before washing may:',o:['Improve cleaning','Fix stains permanently','Have no effect','Increase brightness'],a:'Fix stains permanently',q_ar:'تأخير إزالة مزيل البقع قبل الغسيل قد:',o_ar:['يحسن التنظيف','يثبت البقع بشكل دائم','ليس له تأثير','يزيد السطوع'],a_ar:'يثبت البقع بشكل دائم'},
+            {type:'mcq',q:'The main function of isopropyl alcohol is:',o:['Dye fixation','Solvent for oils and grease','Fiber strengthening','Bleaching'],a:'Solvent for oils and grease',q_ar:'الوظيفة الرئيسية لكحول الإيزوبروبيل هي:',o_ar:['تثبيت الصبغة','مذيب للزيوت والشحوم','تقوية الألياف','التبييض'],a_ar:'مذيب للزيوت والشحوم'},
+            {type:'mcq',q:'Chain mercerizing requires stronger seams due to:',o:['Chemical reaction only','High mechanical tension','Low temperature','Color change'],a:'High mechanical tension',q_ar:'تتطلب المرسرة بالسلاسل وصلات أقوى بسبب:',o_ar:['التفاعل الكيميائي فقط','الشد الميكانيكي العالي','درجة الحرارة المنخفضة','تغير اللون'],a_ar:'الشد الميكانيكي العالي'},
+            {type:'mcq',q:'Patchy dyeing is mainly caused by:',o:['High temperature','Uneven impurity distribution','Excess water','Strong fabric'],a:'Uneven impurity distribution',q_ar:'الصباغة غير المنتظمة تنتج بشكل أساسي عن:',o_ar:['الحرارة العالية','التوزيع غير المتساوي للشوائب','الماء الزائد','القماش القوي'],a_ar:'التوزيع غير المتساوي للشوائب'},
+            {type:'mcq',q:'Cutting defective portions prevents:',o:['Color fading','Machine entanglement','Fabric softening','Chemical reaction'],a:'Machine entanglement',q_ar:'قطع الأجزاء المعيبة يمنع:',o_ar:['بهتان اللون','تشابك الماكينة','تنعيم القماش','التفاعل الكيميائي'],a_ar:'تشابك الماكينة'},
+            {type:'mcq',q:'Anionic emulsifiers function by:',o:['Neutralizing dyes','Dispersing oils in water','Increasing stiffness','Reducing light'],a:'Dispersing oils in water',q_ar:'المستحلبات الأنيونية تعمل عن طريق:',o_ar:['تحييد الأصباغ','تشتيت الزيوت في الماء','زيادة الصلابة','تقليل الضوء'],a_ar:'تشتيت الزيوت في الماء'},
+            {type:'mcq',q:'Poor lot sorting leads to:',o:['Better efficiency','Processing inconsistency','Faster inspection','Reduced defects'],a:'Processing inconsistency',q_ar:'فرز الدفعات السيئ يؤدي إلى:',o_ar:['كفاءة أفضل','عدم اتساق المعالجة','تفتيش أسرع','تقليل العيوب'],a_ar:'عدم اتساق المعالجة'},
+            {type:'mcq',q:'The main advantage of continuous fabric processing is:',o:['Increased manual work','Higher efficiency and uniformity','More defects','Slower production'],a:'Higher efficiency and uniformity',q_ar:'الميزة الرئيسية للمعالجة المستمرة للقماش هي:',o_ar:['زيادة العمل اليدوي','كفاءة وانتظام أعلى','عيوب أكثر','إنتاج أبطأ'],a_ar:'كفاءة وانتظام أعلى'},
+            {type:'mcq',q:'Failure to remove tar stains results in:',o:['Uniform dyeing','Severe dyeing defects','Increased gloss','Improved strength'],a:'Severe dyeing defects',q_ar:'الفشل في إزالة بقع القطران يؤدي إلى:',o_ar:['صباغة موحدة','عيوب صباغة خطيرة','زيادة اللمعان','قوة محسنة'],a_ar:'عيوب صباغة خطيرة'},
+            {type:'mcq',q:'The main purpose of asymmetrical spiral arrangement in shearing machines is:',o:['Reduce energy consumption','Prevent periodic pile variation','Increase machine speed','Reduce machine weight'],a:'Prevent periodic pile variation',q_ar:'الغرض الرئيسي من الترتيب اللولبي غير المتماثل في آلات القص هو:',o_ar:['تقليل استهلاك الطاقة','منع تغير الزغب الدوري','زيادة سرعة الماكينة','تقليل وزن الماكينة'],a_ar:'منع تغير الزغب الدوري'},
+            {type:'mcq',q:'The hardness relationship between ledger blade and spirals is:',o:['Equal hardness','Ledger blade is harder','Spirals are harder','No relation'],a:'Spirals are harder',q_ar:'علاقة الصلابة بين نصل (Ledger blade) واللوالب هي:',o_ar:['صلابة متساوية','النصل أصلب','اللوالب أصلب','لا توجد علاقة'],a_ar:'اللوالب أصلب'},
+            {type:'mcq',q:'Increasing the cutting angle will:',o:['Improve surface smoothness','Reduce friction','Decrease cutting precision','Increase cooling'],a:'Decrease cutting precision',q_ar:'زيادة زاوية القطع سوف:',o_ar:['تحسن نعومة السطح','تقلل الاحتكاك','تقلل دقة القطع','تزيد التبريد'],a_ar:'تقلل دقة القطع'},
+            {type:'mcq',q:'Failure of seam sensor may result in:',o:['Machine shutdown only','Seam cutting damage','Increased speed','No cutting'],a:'Seam cutting damage',q_ar:'فشل حساس الوصلة قد يؤدي إلى:',o_ar:['توقف الماكينة فقط','ضرر قص الوصلة','زيادة السرعة','عدم القص'],a_ar:'ضرر قص الوصلة'},
+            {type:'mcq',q:'Increasing the number of spiral blades in shearing machines leads to:',o:['Lower cutting frequency','Higher cutting frequency','No effect','Lower quality'],a:'Higher cutting frequency',q_ar:'زيادة عدد الشفرات اللولبية في آلات القص يؤدي إلى:',o_ar:['تردد قطع أقل','تردد قطع أعلى','ليس له تأثير','جودة أقل'],a_ar:'تردد قطع أعلى'},
+            {type:'mcq',q:'Shear height mainly depends on:',o:['Fabric color','Fabric thickness','Fabric weight','Fabric width'],a:'Fabric thickness',q_ar:'ارتفاع القص يعتمد بشكل أساسي على:',o_ar:['لون القماش','سمك القماش','وزن القماش','عرض القماش'],a_ar:'سمك القماش'},
+            {type:'mcq',q:'Serrated blades are preferred for polyester because they:',o:['Reduce heat generation','Prevent slipping','Improve cutting due to thermal nature','Reduce speed'],a:'Improve cutting due to thermal nature',q_ar:'يفضل استخدام الشفرات المسننة للبوليستر لأنها:',o_ar:['تقلل توليد الحرارة','تمنع الانزلاق','تحسن القص بسبب الطبيعة الحرارية','تقلل السرعة'],a_ar:'تحسن القص بسبب الطبيعة الحرارية'},
+            {type:'mcq',q:'The function of brushes before shearing is to:',o:['Remove lint','Align fibers','Cool the fabric','Compress the fabric'],a:'Align fibers',q_ar:'وظيفة الفرش قبل القص هي:',o_ar:['إزالة الوبر','محاذاة الألياف','تبريد القماش','ضغط القماش'],a_ar:'محاذاة الألياف'},
+            {type:'mcq',q:'Uneven pressure during shearing causes:',o:['Complete cutting failure','Uneven shearing','Machine stoppage','Speed increase'],a:'Uneven shearing',q_ar:'الضغط غير المتساوي أثناء القص يسبب:',o_ar:['فشل القطع الكامل','قص غير متساوٍ','توقف الماكينة','زيادة السرعة'],a_ar:'قص غير متساوٍ'},
+            {type:'mcq',q:'The vacuum system in shearing machines is important because it:',o:['Reduces weight','Improves surface quality','Prevents cutting','Increases speed'],a:'Improves surface quality',q_ar:'نظام الشفط في آلات القص مهم لأنه:',o_ar:['يقلل الوزن','يحسن جودة السطح','يمنع القص','يزيد السرعة'],a_ar:'يحسن جودة السطح'},
+            {type:'mcq',q:'An eccentric cylinder results in:',o:['Increased speed','Irregular shearing','Reduced pressure','Stable operation'],a:'Irregular shearing',q_ar:'الأسطوانة اللامركزية تؤدي إلى:',o_ar:['زيادة السرعة','قص غير منتظم','ضغط منخفض','تشغيل مستقر'],a_ar:'قص غير منتظم'},
+            {type:'mcq',q:'Grinding the ledger blade is cheaper because it is:',o:['Smaller in size','Less hard','Less used','Lighter'],a:'Less hard',q_ar:'طحن نصل (Ledger blade) أرخص لأنه:',o_ar:['أصغر حجماً','أقل صلابة','أقل استخداماً','أخف وزناً'],a_ar:'أقل صلابة'},
+            {type:'mcq',q:'Brushes after shearing are used to:',o:['Align fibers','Remove cut fibers','Compress fabric','Heat the fabric'],a:'Remove cut fibers',q_ar:'الفرش بعد القص تستخدم من أجل:',o_ar:['محاذاة الألياف','إزالة الألياف المقصوصة','ضغط القماش','تسخين القماش'],a_ar:'إزالة الألياف المقصوصة'},
+            {type:'mcq',q:'The most critical factor for shearing quality is:',o:['Fabric color','Uniform contact','Fabric weight','Fabric length'],a:'Uniform contact',q_ar:'العامل الأكثر أهمية لجودة القص هو:',o_ar:['لون القماش','التلامس الموحد','وزن القماش','طول القماش'],a_ar:'التلامس الموحد'},
+            {type:'mcq',q:'The main risk in cotton shearing is:',o:['Melting','Surface scratching','Burning','Stretching'],a:'Surface scratching',q_ar:'الخطر الرئيسي في قص القطن هو:',o_ar:['الانصهار','خدش السطح','الاحتراق','التمدد'],a_ar:'خدش السطح'},
+            {type:'mcq',q:'A four-cutter machine provides:',o:['One cutting point','Two cutting points','Three cutting points','Four cutting points'],a:'Four cutting points',q_ar:'ماكينة ذات أربعة قواطع توفر:',o_ar:['نقطة قطع واحدة','نقطتي قطع','ثلاث نقاط قطع','أربع نقاط قطع'],a_ar:'أربع نقاط قطع'},
+            {type:'mcq',q:'Seams must be avoided during shearing because they:',o:['Change color','Get cut and damage fabric','Increase weight','Affect length'],a:'Get cut and damage fabric',q_ar:'يجب تجنب الوصلات أثناء القص لأنها:',o_ar:['تغير اللون','تُقص وتدمر القماش','تزيد الوزن','تؤثر على الطول'],a_ar:'تُقص وتدمر القماش'},
+            {type:'mcq',q:'The relationship between shear height and quality:',o:['Always direct','Always inverse','Depends on fabric type','No relation'],a:'Depends on fabric type',q_ar:'العلاقة بين ارتفاع القص والجودة:',o_ar:['طردية دائماً','عكسية دائماً','تعتمد على نوع القماش','لا توجد علاقة'],a_ar:'تعتمد على نوع القماش'},
+            {type:'mcq',q:'Why is singeing performed on cotton fabrics?',o:['To increase weight','To smooth the surface and improve luster','To make it water resistant','To reduce width'],a:'To smooth the surface and improve luster',q_ar:'لماذا يتم الغناء على أقمشة القطن؟',o_ar:['لزيادة الوزن','لتنعيم السطح وتحسين اللمعان','لجعلها مقاومة للماء','لتقليل العرض'],a_ar:'لتنعيم السطح وتحسين اللمعان'},
+            {type:'mcq',q:'Which of the following is a traditional singeing machine type?',o:['Laser singeing machine','Plate singeing machine','Ultrasonic singeing machine','Steam singeing machine'],a:'Plate singeing machine',q_ar:'أي مما يلي هو نوع تقليدي لماكينة الغناء؟',o_ar:['ماكينة الغناء بالليزر','ماكينة الغناء بالصفيحة','ماكينة الغناء بالأمواج فوق الصوتية','ماكينة الغناء بالبخار'],a_ar:'ماكينة الغناء بالصفيحة'},
+            {type:'mcq',q:'Quenching after singeing is done to:',o:['Remove wrinkles','Extinguish sparks','Increase fabric luster','Add sizing'],a:'Extinguish sparks',q_ar:'يتم الإطفاء (Quenching) بعد الغناء من أجل:',o_ar:['إزالة التجاعيد','إخماد الشرر','زيادة لمعان القماش','إضافة البوش'],a_ar:'إخماد الشرر'},
+            {type:'mcq',q:'What is the effect of improper singeing on dyed fabric?',o:['Higher gloss','Streaks or defects','Faster drying','No effect'],a:'Streaks or defects',q_ar:'ما هو تأثير الغناء غير السليم على القماش المصبوغ؟',o_ar:['لمعان أعلى','خطوط أو عيوب','تجفيف أسرع','لا يوجد تأثير'],a_ar:'خطوط أو عيوب'},
+            {type:'mcq',q:'Why are brushes used in gas singeing?',o:['To align yarns','To remove fluff and dust','To heat fabric','To reduce shrinkage'],a:'To remove fluff and dust',q_ar:'لماذا تستخدم الفرش في الغناء بالغاز؟',o_ar:['لمحاذاة الخيوط','إزالة الوبر والغبار','تسخين القماش','تقليل الانكماش'],a_ar:'إزالة الوبر والغبار'},
+            {type:'mcq',q:'Passing fabric through weft straighteners:',o:['Removes warp-wise creases','Removes weft-wise creases','Adds strength','Increases thickness'],a:'Removes weft-wise creases',q_ar:'تمرير القماش عبر معدلات اللحمة:',o_ar:['يزيل تجاعيد السداء','يزيل تجاعيد اللحمة','يضيف قوة','يزيد السمك'],a_ar:'يزيل تجاعيد اللحمة'},
+            {type:'mcq',q:'A desizing compartment may be attached after singeing to:',o:['Add color','Remove size','Reduce fiber length','Increase thickness'],a:'Remove size',q_ar:'قد يتم إرفاق حجرة إزالة البوش بعد الغناء من أجل:',o_ar:['إضافة اللون','إزالة البوش','تقليل طول الألياف','زيادة السمك'],a_ar:'إزالة البوش'},
+            {type:'mcq',q:'Which of the following is a natural sizing agent?',o:['Polyvinyl alcohol','Gelatin','Sodium bromate','Hydrogen peroxide'],a:'Gelatin',q_ar:'أي مما يلي هو مادة بوش طبيعية؟',o_ar:['بولي فينيل كحول','الجيلاتين','برومات الصوديوم','بيروكسيد الهيدروجين'],a_ar:'الجيلاتين'},
+            {type:'mcq',q:'Which method is most commonly used for desizing cotton?',o:['Thermal treatment','Acid treatment','Enzymatic treatment','Oxidation with sodium persulfate'],a:'Enzymatic treatment',q_ar:'ما هي الطريقة الأكثر استخداماً لإزالة بوش القطن؟',o_ar:['المعالجة الحرارية','المعالجة الحمضية','المعالجة الإنزيمية','الأكسدة ببيرسلفات الصوديوم'],a_ar:'المعالجة الإنزيمية'},
+            {type:'mcq',q:'What is the main function of enzymes in desizing?',o:['Convert starch into monosaccharides or disaccharides','Remove wax','Bleach fabric','Reduce fiber length'],a:'Convert starch into monosaccharides or disaccharides',q_ar:'ما هي الوظيفة الرئيسية للإنزيمات في إزالة البوش؟',o_ar:['تحويل النشا لسكريات أحادية أو ثنائية','إزالة الشمع','تبييض القماش','تقليل طول الألياف'],a_ar:'تحويل النشا لسكريات أحادية أو ثنائية'},
+            {type:'mcq',q:'Alkali after-treatment is necessary after oxidation desizing because:',o:['It softens fibers','Insoluble by-products must be removed','It adds shine','It shortens processing time'],a:'Insoluble by-products must be removed',q_ar:'المعالجة القلوية اللاحقة ضرورية بعد إزالة البوش بالأكسدة لأن:',o_ar:['تنعم الألياف','يجب إزالة النواتج الثانوية غير القابلة للذوبان','تضيف لمعاناً','تقصر وقت المعالجة'],a_ar:'يجب إزالة النواتج الثانوية غير القابلة للذوبان'},
+            {type:'mcq',q:'Which acid can be used for acid desizing?',o:['Acetic acid','Hydrochloric acid','Citric acid','Formic acid'],a:'Hydrochloric acid',q_ar:'أي حمض يمكن استخدامه لإزالة البوش الحمضية؟',o_ar:['حمض الخليك','حمض الهيدروكلوريك','حمض الستريك','حمض الفورميك'],a_ar:'حمض الهيدروكلوريك'},
+            {type:'mcq',q:'Pectin affects:',o:['Fiber absorption','Tensile strength only','Dye stability','Thermal properties'],a:'Fiber absorption',q_ar:'البكتين يؤثر على:',o_ar:['امتصاص الألياف','قوة الشد فقط','استقرار الصبغة','الخصائص الحرارية'],a_ar:'امتصاص الألياف'},
+            {type:'mcq',q:'Which fiber requires strong alkaline scouring?',o:['Wool','Silk','Cotton','Polyester'],a:'Cotton',q_ar:'أي ليفة تتطلب تنظيفاً قلوياً قوياً؟',o_ar:['الصوف','الحرير','القطن','البوليستر'],a_ar:'القطن'},
+            {type:'mcq',q:'During bleaching, hydrogen peroxide is preferred because:',o:['It is cheaper','It is environmentally safe','It is stronger than sodium hypochlorite','It does not react with dyes'],a:'It is environmentally safe',q_ar:'أثناء التبييض، يفضل بيروكسيد الهيدروجين لأنه:',o_ar:['أرخص','آمن بيئياً','أقوى من هيبوكلوريت الصوديوم','لا يتفاعل مع الأصباغ'],a_ar:'آمن بيئياً'},
+            {type:'mcq',q:'Wool and silk require:',o:['Strong alkaline scouring','Mild alkaline treatment','Thermal stabilization','Mercerization'],a:'Mild alkaline treatment',q_ar:'يتطلب الصوف والحرير:',o_ar:['تنظيفاً قلوياً قوياً','معالجة قلوية خفيفة','تثبيتاً حرارياً','مرسرة'],a_ar:'معالجة قلوية خفيفة'},
+            {type:'mcq',q:'Synthetic fibers may need:',o:['Enzymatic desizing','Thermal stabilization','Acid desizing','Strong alkali treatment'],a:'Thermal stabilization',q_ar:'قد تحتاج الألياف الاصطناعية إلى:',o_ar:['إزالة بوش إنزيمية','تثبيت حراري','إزالة بوش حمضية','معالجة قلوية قوية'],a_ar:'تثبيت حراري'},
+            {type:'mcq',q:'The purpose of mercerization is to:',o:['Reduce fiber length','Make fibers stronger and shinier','Remove sizing agents','Bleach fabric'],a:'Make fibers stronger and shinier',q_ar:'الغرض من المرسرة هو:',o_ar:['تقليل طول الألياف','جعل الألياف أقوى وأكثر لمعاناً','إزالة مواد البوش','تبييض القماش'],a_ar:'جعل الألياف أقوى وأكثر لمعاناً'},
+            {type:'mcq',q:'Mercerization causes cotton fibers to:',o:['Shrink laterally','Swell and rearrange polymer chains','Melt','Become insoluble'],a:'Swell and rearrange polymer chains',q_ar:'تسبب المرسرة لألياف القطن:',o_ar:['انكماشاً عرضياً','انتفاخاً وإعادة ترتيب سلاسل البوليمر','انصهاراً','أن تصبح غير قابلة للذوبان'],a_ar:'انتفاخاً وإعادة ترتيب سلاسل البوليمر'},
+            {type:'mcq',q:'Mercerized fibers show:',o:['Reduced interaction with dyes','Increased luster and dimensional stability','Decreased tensile strength','Shrinkage in width only'],a:'Increased luster and dimensional stability',q_ar:'تظهر الألياف المرسيرا:',o_ar:['تفاعلاً أقل مع الأصباغ','زيادة اللمعان والاستقرار البعدي','نقص قوة الشد','انكماشاً في العرض فقط'],a_ar:'زيادة اللمعان والاستقرار البعدي'},
+            {type:'mcq',q:'Caustic soda concentration for complete cotton scouring is approximately:',o:['0.5%','1.5–3%','5–10%','10–15%'],a:'1.5–3%',q_ar:'تركيز الصودا الكاوية لتنظيف القطن الكامل هو تقريباً:',o_ar:['0.5%','1.5–3%','5–10%','10–15%'],a_ar:'1.5–3%'},
+            {type:'mcq',q:'Impurities like mineral salts can affect:',o:['Dye deposition in continuous processes','Luster of mercerized cotton','Fiber cross-section','Thermal stability of synthetics'],a:'Dye deposition in continuous processes',q_ar:'الشوائب مثل الأملاح المعدنية يمكن أن تؤثر على:',o_ar:['ترسيب الصبغة في العمليات المستمرة','لمعان القطن المرسيرا','المقطع العرضي لليفة','الاستقرار الحراري للاصطناعية'],a_ar:'ترسيب الصبغة في العمليات المستمرة'},
+            {type:'mcq',q:'Scouring creates:',o:['Smooth fibers with no pores','Sunken places in the outer layer for better water penetration','Hard fibers resistant to chemicals','Pectin deposits'],a:'Sunken places in the outer layer for better water penetration',q_ar:'عملية التنظيف تخلق:',o_ar:['أليافاً ملساء بدون مسام','أماكن غائرة في الطبقة الخارجية لاختراق أفضل للماء','أليافاً صلبة مقاومة للمواد الكيميائية','ترسبات بكتين'],a_ar:'أماكن غائرة في الطبقة الخارجية لاختراق أفضل للماء'},
+            {type:'mcq',q:'In enzymatic desizing, fabric is typically kept at:',o:['30°C for 1 hour','60°C for 2–20 hours','100°C for 30 min','120°C for 10 min'],a:'60°C for 2–20 hours',q_ar:'في إزالة البوش الإنزيمية، يتم عادةً إبقاء القماش عند:',o_ar:['30 °م لمدة ساعة','60 °م لمدة 2–20 ساعة','100 °م لمدة 30 دقيقة','120 °م لمدة 10 دقائق'],a_ar:'60 °م لمدة 2–20 ساعة'},
+            {type:'mcq',q:'Thermal desizing is mainly used for:',o:['Cotton fibers','Wool fibers','Glass fibers','Polyester fibers'],a:'Glass fibers',q_ar:'إزالة البوش الحرارية تستخدم بشكل أساسي لـ:',o_ar:['ألياف القطن','ألياف الصوف','ألياف الزجاج','ألياف البوليستر'],a_ar:'ألياف الزجاج'},
+            {type:'mcq',q:'Mineral acids attack starch by:',o:['Oxidizing fibers','Attacking glycosidic bonds to form soluble sugars','Hydrolyzing proteins','Removing wax only'],a:'Attacking glycosidic bonds to form soluble sugars',q_ar:'الأحماض المعدنية تهاجم النشا عن طريق:',o_ar:['أكسدة الألياف','مهاجمة الروابط الجليكوسيدية لتكوين سكريات ذائبة','تحلل البروتينات','إزالة الشمع فقط'],a_ar:'مهاجمة الروابط الجليكوسيدية لتكوين سكريات ذائبة'},
+            {type:'mcq',q:'Proper preparation of grey fabrics ensures:',o:['Increased crease formation','Homogeneous absorption and removal of impurities','Reduced dye fixation','Reduced whiteness'],a:'Homogeneous absorption and removal of impurities',q_ar:'التحضير السليم للأقمشة الرمادية يضمن:',o_ar:['زيادة تكوين التجاعيد','الامتصاص المتجانس وإزالة الشوائب','نقص تثبيت الصبغة','نقص البياض'],a_ar:'الامتصاص المتجانس وإزالة الشوائب'}
+        ];
+
+        let idx = 0, userAns = new Array(rawData.length).fill(null);
+
+        function render() {
+            const q = rawData[idx];
+            const answered = userAns[idx] !== null;
+            
+            // Progress Calculation
+            const progressPct = Math.round(((idx + 1) / rawData.length) * 100);
+            
+            // Update Progress UI
+            document.getElementById('progressText').innerText = `Q ${idx + 1} / ${rawData.length}`;
+            document.getElementById('percentageLabel').innerText = `${progressPct}%`;
+            document.getElementById('progressFill').style.width = `${progressPct}%`;
+            
+            document.getElementById('qType').innerText = q.type === 'tf' ? 'True / False | صح أم خطأ' : 'Choice | اختيار من متعدد';
+            document.getElementById('qText').innerHTML = `<div>${q.q}</div><div class="arabic-text text-yellow-500/80" dir="rtl">${q.q_ar}</div>`;
+            document.getElementById('hintContent').innerHTML = `<div>${q.h || "Review the process logic based on the materials provided."}</div><div class="arabic-text opacity-50" dir="rtl">${q.h_ar || "راجع منطق العملية بناءً على المواد المقدمة."}</div>`;
+            document.getElementById('hintBox').classList.add('hidden');
+
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+            const optsEn = q.type === 'tf' ? ['True', 'False'] : q.o;
+            const optsAr = q.type === 'tf' ? ['صح', 'خطأ'] : q.o_ar;
+
+            optsEn.forEach((en, i) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full p-3 rounded-lg text-xs md:text-sm text-left relative overflow-hidden group`;
+                btn.innerHTML = `<span class="block text-white">${en}</span><span class="arabic-text text-white/40" dir="rtl">${optsAr[i]}</span>`;
+                btn.onclick = () => select(en, btn);
+                if(answered) {
+                    btn.disabled = true;
+                    if(en === q.a) btn.classList.add('btn-correct');
+                    if(en === userAns[idx] && en !== q.a) btn.classList.add('btn-wrong');
+                }
+                grid.appendChild(btn);
+            });
+            document.getElementById('prevBtn').disabled = idx === 0;
+        }
+
+        function select(val, btn) {
+            if(userAns[idx] !== null) return;
+            userAns[idx] = val;
+            if(val === rawData[idx].a) btn.classList.add('btn-correct');
+            else {
+                btn.classList.add('btn-wrong');
+                Array.from(document.querySelectorAll('.option-btn')).forEach(b => { 
+                    if(b.innerText.includes(rawData[idx].a)) b.classList.add('btn-correct'); 
+                });
+            }
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+        }
+
+        function nextQuestion() { idx < rawData.length - 1 ? (idx++, render()) : show(); }
+        function prevQuestion() { if(idx > 0) { idx--; render(); } }
+        function skipQuestion() { nextQuestion(); }
+        
+        function show() {
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+            const correct = userAns.reduce((acc, v, i) => v === rawData[i].a ? acc + 1 : acc, 0);
+            document.getElementById('finalScore').innerText = Math.round((correct/rawData.length)*100) + "%";
+            document.getElementById('correctCount').innerText = correct;
+            document.getElementById('wrongCount').innerText = rawData.length - correct;
+        }
+        
+        function restartQuiz() { idx=0; userAns.fill(null); document.getElementById('resultScreen').classList.add('hidden'); document.getElementById('quizContainer').classList.remove('hidden'); render(); }
+        
+        window.onload = () => { 
+            lucide.createIcons(); 
+            render(); 
+            document.getElementById('hintBtn').onclick = () => document.getElementById('hintBox').classList.toggle('hidden'); 
+        };
+    </script>
+</body>
+</html>
