@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finishing</title>
-    <!-- Tailwind CSS for modern styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@300;400;600&family=Noto+Sans+Arabic:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -109,6 +106,68 @@
             background: linear-gradient(90deg, rgba(245,158,11,0.95), rgba(252,211,77,0.95), rgba(249,115,22,0.95));
             transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 0 24px rgba(249, 115, 22, 0.35);
+        }
+
+       .status-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 11px;
+    white-space: nowrap;
+}
+        #progressText.status-pill {
+            font-size: 0.72rem;
+            color: rgba(226, 232, 240, 0.75);
+            text-transform: uppercase;
+        }
+
+        #percentageLabel.status-pill {
+            font-size: 0.95rem;
+            color: #facc15;
+            font-weight: 700;
+            text-shadow: 0 0 12px rgba(250, 204, 21, 0.22);
+        }
+
+        #score-pill.status-pill {
+            font-size: 0.76rem;
+            color: rgba(255, 255, 255, 0.92);
+            font-weight: 700;
+        }
+
+       
+        .result-metric {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+        }
+
+        .result-metric-value {
+            font-size: 1.35rem;
+            letter-spacing: 0.02em;
+            font-weight: 800;
+        }
+
+        .result-metric-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .result-message-text {
+            font-size: 0.93rem;
+            color: #d8d8d8;
+            line-height: 1.75;
+        }
+
+        .result-message-text.positive {
+            color: #f9d462;
+        }
+
+        .result-message-text.negative {
+            color: #f0e6bf;
         }
 
         .bebo-wrapper {
@@ -313,30 +372,45 @@
         }
 
         @media (max-width: 640px) {
-            .nav-text { display: inline-block; } 
+            .nav-text { display: inline-block; }
             #qText { font-size: 1rem; }
             .option-btn { padding: 0.65rem; }
             .nav-btn-container { padding: 0.5rem 0.75rem; }
+            .cinematic-header {
+                padding-top: 0.65rem;
+                padding-bottom: 0.65rem;
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+            .material-title {
+                font-size: 0.95rem;
+            }
+            .status-pill {
+                padding: 0.2rem 0.6rem;
+                font-size: 0.68rem;
+            }
+            #progressText.status-pill {
+                font-size: 0.7rem;
+            }
+            #percentageLabel.status-pill,
+            #score-pill.status-pill {
+                font-size: 0.82rem;
+            }
         }
     </style>
 </head>
 <body class="flex flex-col">
 
-    <!-- Header -->
-    <header class="cinematic-header py-2 md:py-3 px-3 md:px-4 sticky top-0 z-50">
-        <div class="max-w-sm md:max-w-4xl mx-auto flex justify-between items-center">
-            <h1 class="material-title text-base md:text-2xl font-bold text-yellow-500 uppercase">Finishing</h1>
-            <div class="flex flex-col items-end">
-                <div class="text-[9px] md:text-xs opacity-60 font-mono bg-white/5 px-1.5 md:px-2 py-0.5 md:py-1 rounded border border-white/10 mb-0.5 md:mb-1" id="progressText">
-                    Q 1 / 134
-                </div>
-                <div id="percentageLabel" class="text-[9px] md:text-[10px] font-bold text-yellow-500/80">0%</div>
-                <div id="score-pill" class="text-[9px] md:text-[10px] font-bold text-white/80 mt-0.5 md:mt-1">SCORE: 0</div>
-            </div>
+    <header class="cinematic-header py-2 px-3 sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+        <h1 class="material-title text-sm md:text-xl font-bold text-yellow-500 uppercase">Finishing</h1>
+        <div class="flex items-center gap-1">
+            <div id="progressText" class="status-pill">Q 1/134</div>
+            <div id="percentageLabel" class="status-pill text-yellow-500">0%</div>
+            <div id="score-pill" class="status-pill">S: 0</div>
         </div>
-    </header>
-
-    <!-- Bebo Assistant -->
+    </div>
+</header>
     <section id="bebo-wrapper" class="bebo-wrapper">
         <div id="bebo-bubble" class="bebo-bubble">مرحبا! جاهز للتحدي؟</div>
         <div id="bebo-robot" class="bebo-robot ready" aria-label="Bebo assistant robot">
@@ -347,7 +421,6 @@
         </div>
     </section>
 
-    <!-- Percentage Progress Bar -->
     <div class="progress-container">
         <div class="max-w-sm md:max-w-4xl mx-auto">
             <div class="progress-bar-wrapper">
@@ -356,7 +429,6 @@
         </div>
     </div>
 
-    <!-- Main -->
     <main class="flex-grow flex items-center justify-center p-2 md:p-6">
         <div id="quiz-container" class="w-full max-w-sm md:max-w-xl">
             <div class="flex justify-end mb-1.5 md:mb-2">
@@ -389,25 +461,26 @@
             </div>
         </div>
 
-        <!-- Results -->
         <div id="result-view" class="hidden w-full max-w-sm md:max-w-md text-center glass-card p-6 md:p-8 relative">
-            <div id="result-accent" class="absolute top-0 left-0 w-full h-1 bg-yellow-500"></div>
-            <i data-lucide="award" class="w-10 h-10 md:w-12 md:h-12 text-yellow-500 mx-auto mb-3 md:mb-4"></i>
-            <p class="text-[9px] md:text-[10px] text-gray-500 mb-4 md:mb-6">الاختبار طويل معلش بس انت بطل انك كملت للاخر عاش عليك</p>
-            <div class="text-4xl md:text-5xl font-bold text-yellow-500 mb-2">0%</div>
-            <div id="result-message" class="text-xs md:text-sm text-gray-300 leading-5 md:leading-6 mb-3 md:mb-4"></div>
-            <div class="grid grid-cols-2 gap-1.5 md:gap-2 mt-4 md:mt-6">
-                <div class="p-2 md:p-3 bg-green-500/5 border border-green-500/10 rounded">
-                    <div id="correctCount" class="text-green-500 font-bold text-sm md:text-base">0</div>
-                    <div class="text-[8px] md:text-[9px] opacity-50 uppercase">Correct</div>
-                </div>
-                <div class="p-2 md:p-3 bg-red-500/5 border border-red-500/10 rounded">
-                    <div id="wrongCount" class="text-red-500 font-bold text-sm md:text-base">0</div>
-                    <div class="text-[8px] md:text-[9px] opacity-50 uppercase">Wrong</div>
-                </div>
-            </div>
-            <button onclick="restartQuiz()" class="mt-6 md:mt-8 bg-yellow-600 text-white px-6 md:px-8 py-1.5 md:py-2 rounded-full text-xs font-bold">Restart</button>
+    <div id="result-accent" class="absolute top-0 left-0 w-full h-1 bg-yellow-500"></div>
+    
+    <div id="finalScoreDisplay" class="text-[2.55rem] md:text-[3.5rem] font-extrabold text-yellow-400 mb-2 mt-4">0%</div>
+    
+    <div id="result-message" class="result-message-text mb-3 md:mb-4"></div>
+    
+    <div class="grid grid-cols-2 gap-1.5 md:gap-2 mt-4 md:mt-6">
+        <div class="p-3 result-metric rounded">
+            <div id="correctCount" class="result-metric-value text-green-400">0</div>
+            <div class="result-metric-label text-green-300">Correct</div>
         </div>
+        <div class="p-3 result-metric rounded">
+            <div id="wrongCount" class="result-metric-value text-red-400">0</div>
+            <div class="result-metric-label text-red-300">Wrong</div>
+        </div>
+    </div>
+    
+    <button onclick="restartQuiz()" class="mt-6 md:mt-8 bg-yellow-600 text-white px-6 md:px-8 py-1.5 md:py-2 rounded-full text-xs font-bold">Restart</button>
+</div>
     </main>
 
     <footer class="py-2 md:py-4 text-center border-t border-white/5 bg-black/20">
@@ -516,7 +589,7 @@
             {type:'mcq',q:'Shear height mainly depends on:',o:['Fabric color','Fabric thickness','Fabric weight','Fabric width'],a:'Fabric thickness',q_ar:'ارتفاع القص يعتمد بشكل أساسي على:',o_ar:['لون القماش','سمك القماش','وزن القماش','عرض القماش'],a_ar:'سمك القماش'},
             {type:'mcq',q:'Serrated blades are preferred for polyester because they:',o:['Reduce heat generation','Prevent slipping','Improve cutting due to thermal nature','Reduce speed'],a:'Improve cutting due to thermal nature',q_ar:'يفضل استخدام الشفرات المسننة للبوليستر لأنها:',o_ar:['تقلل توليد الحرارة','تمنع الانزلاق','تحسن القص بسبب الطبيعة الحرارية','تقلل السرعة'],a_ar:'تحسن القص بسبب الطبيعة الحرارية'},
             {type:'mcq',q:'The function of brushes before shearing is to:',o:['Remove lint','Align fibers','Cool the fabric','Compress the fabric'],a:'Align fibers',q_ar:'وظيفة الفرش قبل القص هي:',o_ar:['إزالة الوبر','محاذاة الألياف','تبريد القماش','ضغط القماش'],a_ar:'محاذاة الألياف'},
-            {type:'mcq',q:'Uneven pressure during shearing causes:',o:['Complete cutting failure','Uneven shearing','Machine stoppage','Speed increase'],a:'Uneven shearing',q_ar:'الضغط غير المتساوي أثناء القص يسبب:',o_ar:['فشل القطع الكامل','قص غير متساوٍ','توقف الماكينة','زيادة السرعة'],a_ar:'قص غير متساوٍ'},
+            {type:'mcq',q:'Uneven pressure during shearing causes:',o:['Complete cutting failure','Uneven shearing','Machine stoppage','Speed increase'],a:'Uneven shearing',q_ar:'الضغط غير المتساوي أثناء القص يسبب:',o_ar:['فشل القطع الكامل','قص غير متساوٍ','توقف الماكينة','زيادة السرعة'],a_ar:'قص غير منتظم'},
             {type:'mcq',q:'The vacuum system in shearing machines is important because it:',o:['Reduces weight','Improves surface quality','Prevents cutting','Increases speed'],a:'Improves surface quality',q_ar:'نظام الشفط في آلات القص مهم لأنه:',o_ar:['يقلل الوزن','يحسن جودة السطح','يمنع القص','يزيد السرعة'],a_ar:'يحسن جودة السطح'},
             {type:'mcq',q:'An eccentric cylinder results in:',o:['Increased speed','Irregular shearing','Reduced pressure','Stable operation'],a:'Irregular shearing',q_ar:'الأسطوانة اللامركزية تؤدي إلى:',o_ar:['زيادة السرعة','قص غير منتظم','ضغط منخفض','تشغيل مستقر'],a_ar:'قص غير منتظم'},
             {type:'mcq',q:'Grinding the ledger blade is cheaper because it is:',o:['Smaller in size','Less hard','Less used','Lighter'],a:'Less hard',q_ar:'طحن نصل (Ledger blade) أرخص لأنه:',o_ar:['أصغر حجماً','أقل صلابة','أقل استخداماً','أخف وزناً'],a_ar:'أقل صلابة'},
@@ -592,117 +665,117 @@
         const beboMessages = {
             intro: ["مرحبا اسمي بيبو جاهز لبدء الاختبار؟"],
             correct: [
-    "عاش يا وحش! أداء أسطوري.",
-    "الله ينور عليك، تركيزك في السما!",
-    "ممتاز! كمل يا بطل بنفس الحماس.",
-    "وحش! إجابة فنية مية مية.",
-    "رائع، أنت فاهم اللعبة كويس جداً.",
-    "برافو! إجابة أسطورية زي ما توقعت.",
-    "عاش يا دحيح، مجهودك جبار.",
-    "تسلم إيدك، إجابة مظبوطة بالملي.",
-    "أحسنت! فخور بيك فعلاً يا وحش.",
-    "إيه الحلاوة دي؟ أنت برنس المذاكرة!",
-    "يا واد يا جامد.. إجابة في الجون!",
-    "تسلم الدماغ اللي بتفكر صح دي.",
-    "أيوة كدة هي دي الروح.. استمر!",
-    "عالمي! أنت النهاردة في فورمة عالية جداً.",
-    "مية مية.. أنت كدة حطيت رجلك على أول طريق النجاح.",
-    "برنس من يومك! إجابة مفيهاش غلطة.",
-    "الله أكبر عليك.. تركيزك يحترم فعلاً.",
-    "خطير! مكنتش متوقع السرعة والدقة دي.",
-    "وحش المجرة! كمل ومتقفش.",
-    "إجابة نموذجية تدرس يا هندسة.",
-    "أنت النهاردة فايق ورايق ومسيطر.",
-    "عاش يا بطل.. خليك دايماً في القمة.",
-    "تسلم إيدك، أداء يشرف بجد.",
-    "إيه العظمة دي؟ أنت بتلعب في حتة تانية خالص.",
-    "أحسنت صنعاً.. فخور بمستواك جداً.",
-    "أيوة كدة يا فنان.. نورنا أكتر بإجاباتك.",
-    "صح الصح! أنت فعلاً فاهم مش حافظ.",
-    "برافو عليك.. مجهودك بدأ يبان بقوة.",
-    "أنت النهاردة نجم الحصة بلا منازع.",
-    "عاش يا بطل.. التركيز ده هو سر النجاح.",
-    "إجابة عشرة على عشرة.. استمر يا وحش.",
-    "يا عيني على الإبداع.. أنت شكلك مذاكر كويس.",
-    "ممتاز جداً! خليك دايماً سابق الكل.",
-    "عاش يا هندسة.. إجابة في منتهى الذكاء.",
-    "أيوة كدة فرحني بتركيزك ده!",
-    "الله ينور.. أنت النهاردة مفيش حد قدك.",
-    "إجابة توزن دهب.. تسلم يا دكتور.",
-    "عاش يا دحيح.. أنت فخر لينا كلنا.",
-    "أداء راقي جداً.. أنت فعلاً متميز.",
-    "وحش الكون! مفيش سؤال بيقف قدامك.",
-    "أيوة كدة.. وريني الشغل العالي ده.",
-    "برافو.. أنت النهاردة في قمة مستواك.",
-    "صح جداً.. دماغك دي ألماظ!",
-    "عاش يا وحش.. كمل وما تخليش حاجة تعطلك.",
-    "إجابة محترمة من شخص محترم.. أحسنت.",
-    "يا واد يا لعيب.. جبتها في السوبر!",
-    "تسلم يا غالي.. إجابة تفتح النفس.",
-    "ممتاز! أنت بتثبت لي كل مرة إنك قدها.",
-    "عاش يا بطل.. المستوى ده لازم نحافظ عليه.",
-    "إيه الجمال ده؟ أنت فعلاً عبقري!",
-    "الله ينور عليك.. مجهودك يستحق كل التقدير.",
-    "وحش! أنت كدة في الأمان تماماً.",
-    "أحسنت يا نجم.. إجابة مية على مية.",
-    "عاش يا وحش.. كمل المسيرة بالتفوق ده!"
-],
- wrong: [
-    "غلط تماماً! ركز بقى عشان كدة كتير أوي!",
-    "إيه العك ده؟ فوق كدة واقرأ السؤال كويس يا هندسة!",
-    "إجابة كارثية! راجع معلوماتك فوراً كدة مينفعش!",
-    "غلط! أنت بتهزر ولا إيه؟ ركز بقى شوية!",
-    "غلط جداً! شكلك محتاج كوباية قهوة تظبط الأداء.",
-    "لا لا كدة هنزعل من بعض! ركز في التفاصيل شوية.",
-    "الإجابة في وادي وأنت في وادي تاني خالص.. فوق يا بطل!",
-    "يا بشمهندس ركز، السؤال أسهل من كدة بكتير!",
-    "إيه التوهان ده؟ اقرأ السؤال مرة واتنين وعشرة.",
-    "غلط! ركز عشان مجهودك ميروحش على الأرض.",
-    "ركز يا دكتور، الإجابة دي بعيدة كل البعد عن الصح.",
-    "أنت بتجاوب بالشبه ولا إيه؟ ركز شوية!",
-    "فوق كدة وصحصح، مش عايز أخطاء ساذجة تاني.",
-    "لا دي مش درجتك خالص.. ركز وهاتها صح المرة الجاية.",
-    "إيه العك ده؟ ركز بدل ما أسحب منك الورقة!",
-    "إجابة تودي في داهية! راجع حساباتك فوراً.",
-    "أنت بتألف ولا ده بجد؟ ركز في المعلومة!",
-    "لا كدة كتير.. أنت شكلك مكنتش معانا خالص وأنا بشرح.",
-    "هو ده سؤال يتغلط فيه برضه؟ ركز بقى!",
-    "غلط يا فنان، بس حاول تاني بتركيز أكبر.",
-    "ركز يا وحش، كدة مستواك بيقل وأنا مش راضي.",
-    "إيه الهزار ده؟ جاوب بجدية شوية يا هندسة!",
-    "إجابة بعيدة عن المنطق تماماً.. فكر تاني.",
-    "غلط! راجع القوانين تاني عشان كدة مش هينفع.",
-    "ركز بقى! أنت أشطر من كدة بكتير.",
-    "غلط بس معلش، المرة الجاية عايز تركيز فولاذي.",
-    "مش دي الإجابة اللي كنت مستنيها منك.. ركز!",
-    "فوق يا بطل، لسه قدامنا أسئلة محتاجة دماغ شغالة.",
-    "لا يا هندسة، ركز عشان متضيعش مجهودك في حاجات بسيطة.",
-    "إيه التسرع ده؟ اهدى شوية وركز في المطلوب.",
-    "غلط تماماً! ارجع خطوة لورا وفكر بهدوء.",
-    "ركز يا نجم، أنت قدها بس محتاج شوية انتباه.",
-    "لا مش معقول! ركز عشان تجيب الدرجة النهائية.",
-    "الإجابة دي محتاجة إعادة نظر شاملة.. ركز!",
-    "إيه يا عم أنت لسه نايم ولا إيه؟ ركز!",
-    "لا دي إجابة أي كلام خالص.. فوق كدة!",
-    "أنت كدة بتغرق في شبر مية.. ركز يا هندسة.",
-    "إيه اللخبطة دي؟ رتب أفكارك قبل ما تدوس.",
-    "غلط! شكلك محتاج تفصل شوية وترجع بتركيز.",
-    "يا ابني ركز، السؤال أسهل بكتير من اللي أنت بتعمله.",
-    "إيه العك ده؟ ده حتى البديهيات بتقول غير كدة!",
-    "ركز يا باشا، كدة القطر هيفوتنا!",
-    "لا كدة وسعت منك أوي.. ركز في السؤال.",
-    "غلط! راجع معلوماتك قبل ما الثقة تخدعك.",
-    "ركز بقى، ده آخر إنذار للتركيز!",
-    "غلط تماماً! كدة محتاجين وقفة مع النفس.",
-    "إجابة خارج التوقعات تماماً.. ركز يا بطل.",
-    "لا كدة كتير أوي بجد.. فوق بقى واقرأ كويس!",
-    "ركز يا هندسة، الغلطة هنا بفورة!",
-    "إيه اللي أنت كاتبه ده؟ ده كلام علمي برضه؟ ركز!",
-    "غلط! أنت أكيد بتهزر، ركز بقى شوية.",
-    "لا كدة الموضوع محتاج مذاكرة من أول وجديد.. ركز!",
-    "إجابة كدة وكدة.. بس في الآخر هي غلط! ركز.",
-    "ركز يا وحش عشان نخلص المهمة دي على خير!"
-],
+                "عاش يا وحش! أداء أسطوري.",
+                "الله ينور عليك، تركيزك في السما!",
+                "ممتاز! كمل يا بطل بنفس الحماس.",
+                "وحش! إجابة فنية مية مية.",
+                "رائع، أنت فاهم اللعبة كويس جداً.",
+                "برافو! إجابة أسطورية زي ما توقعت.",
+                "عاش يا دحيح، مجهودك جبار.",
+                "تسلم إيدك، إجابة مظبوطة بالملي.",
+                "أحسنت! فخور بيك فعلاً يا وحش.",
+                "إيه الحلاوة دي؟ أنت برنس المذاكرة!",
+                "يا واد يا جامد.. إجابة في الجون!",
+                "تسلم الدماغ اللي بتفكر صح دي.",
+                "أيوة كدة هي دي الروح.. استمر!",
+                "عالمي! أنت النهاردة في فورمة عالية جداً.",
+                "مية مية.. أنت كدة حطيت رجلك على أول طريق النجاح.",
+                "برنس من يومك! إجابة مفيهاش غلطة.",
+                "الله أكبر عليك.. تركيزك يحترم فعلاً.",
+                "خطير! مكنتش متوقع السرعة والدقة دي.",
+                "وحش المجرة! كمل ومتقفش.",
+                "إجابة نموذجية تدرس يا هندسة.",
+                "أنت النهاردة فايق ورايق ومسيطر.",
+                "عاش يا بطل.. خليك دايماً في القمة.",
+                "تسلم إيدك، أداء يشرف بجد.",
+                "إيه العظمة دي؟ أنت بتلعب في حتة تانية خالص.",
+                "أحسنت صنعاً.. فخور بمستواك جداً.",
+                "أيوة كدة يا فنان.. نورنا أكتر بإجاباتك.",
+                "صح الصح! أنت فعلاً فاهم مش حافظ.",
+                "برافو عليك.. مجهودك بدأ يبان بقوة.",
+                "أنت النهاردة نجم الحصة بلا منازع.",
+                "عاش يا بطل.. التركيز ده هو سر النجاح.",
+                "إجابة عشرة على عشرة.. استمر يا وحش.",
+                "يا عيني على الإبداع.. أنت شكلك مذاكر كويس.",
+                "ممتاز جداً! خليك دايماً سابق الكل.",
+                "عاش يا هندسة.. إجابة في منتهى الذكاء.",
+                "أيوة كدة فرحني بتركيزك ده!",
+                "الله ينور.. أنت النهاردة مفيش حد قدك.",
+                "إجابة توزن دهب.. تسلم يا دكتور.",
+                "عاش يا دحيح.. أنت فخر لينا كلنا.",
+                "أداء راقي جداً.. أنت فعلاً متميز.",
+                "وحش الكون! مفيش سؤال بيقف قدامك.",
+                "أيوة كدة.. وريني الشغل العالي ده.",
+                "برافو.. أنت النهاردة في قمة مستواك.",
+                "صح جداً.. دماغك دي ألماظ!",
+                "عاش يا وحش.. كمل وما تخليش حاجة تعطلك.",
+                "إجابة محترمة من شخص محترم.. أحسنت.",
+                "يا واد يا لعيب.. جبتها في السوبر!",
+                "تسلم يا غالي.. إجابة تفتح النفس.",
+                "ممتاز! أنت بتثبت لي كل مرة إنك قدها.",
+                "عاش يا بطل.. المستوى ده لازم نحافظ عليه.",
+                "إيه الجمال ده؟ أنت فعلاً عبقري!",
+                "الله ينور عليك.. مجهودك يستحق كل التقدير.",
+                "وحش! أنت كدة في الأمان تماماً.",
+                "أحسنت يا نجم.. إجابة مية على مية.",
+                "عاش يا وحش.. كمل المسيرة بالتفوق ده!"
+            ],
+            wrong: [
+                "غلط تماماً! ركز بقى عشان كدة كتير أوي!",
+                "إيه العك ده؟ فوق كدة واقرأ السؤال كويس يا هندسة!",
+                "إجابة كارثية! راجع معلوماتك فوراً كدة مينفعش!",
+                "غلط! أنت بتهزر ولا إيه؟ ركز بقى شوية!",
+                "غلط جداً! شكلك محتاج كوباية قهوة تظبط الأداء.",
+                "لا لا كدة هنزعل من بعض! ركز في التفاصيل شوية.",
+                "الإجابة في وادي وأنت في وادي تاني خالص.. فوق يا بطل!",
+                "يا بشمهندس ركز، السؤال أسهل من كدة بكتير!",
+                "إيه التوهان ده؟ اقرأ السؤال مرة واتنين وعشرة.",
+                "غلط! ركز عشان مجهودك ميروحش على الأرض.",
+                "ركز يا دكتور، الإجابة دي بعيدة كل البعد عن الصح.",
+                "أنت بتجاوب بالشبه ولا إيه؟ ركز شوية!",
+                "فوق كدة وصحصح، مش عايز أخطاء ساذجة تاني.",
+                "لا دي مش درجتك خالص.. ركز وهاتها صح المرة الجاية.",
+                "إيه العك ده؟ ركز بدل ما أسحب منك الورقة!",
+                "إجابة تودي في داهية! راجع حساباتك فوراً.",
+                "أنت بتألف ولا ده بجد? ركز في المعلومة!",
+                "لا كدة كتير.. أنت شكلك مكنتش معانا خالص وأنا بشرح.",
+                "هو ده سؤال يتغلط فيه برضه؟ ركز بقى!",
+                "غلط يا فنان، بس حاول تاني بتركيز أكبر.",
+                "ركز يا وحش، كدة مستواك بيقل وأنا مش راضي.",
+                "إيه الهزار ده؟ جاوب بجدية شوية يا هندسة!",
+                "إجابة بعيدة عن المنطق تماماً.. فكر تاني.",
+                "غلط! راجع القوانين تاني عشان كدة مش هينفع.",
+                "ركز بقى! أنت أشطر من كدة بكتير.",
+                "غلط بس معلش، المرة الجاية عايز تركيز فولاذي.",
+                "مش دي الإجابة اللي كنت مستنيها منك.. ركز!",
+                "فوق يا بطل، لسه قدامنا أسئلة محتاجة دماغ شغالة.",
+                "لا يا هندسة، ركز عشان متضيعش مجهودك في حاجات بسيطة.",
+                "إيه التسرع ده؟ اهدى شوية وركز في المطلوب.",
+                "غلط تماماً! ارجع خطوة لورا وفكر بهدوء.",
+                "ركز يا نجم، أنت قدها بس محتاج شوية انتباه.",
+                "لا مش معقول! ركز عشان تجيب الدرجة النهائية.",
+                "الإجابة دي محتاجة إعادة نظر شاملة.. ركز!",
+                "إيه يا عم أنت لسه نايم ولا إيه؟ ركز!",
+                "لا دي إجابة أي كلام خالص.. فوق كدة!",
+                "أنت كدة بتغرق في شبر مية.. ركز يا هندسة.",
+                "إيه اللخبطة دي؟ رتب أفكارك قبل ما تدوس.",
+                "غلط! شكلك محتاج تفصل شوية وترجع بتركيز.",
+                "يا ابني ركز، السؤال أسهل بكتير من اللي أنت بتعمله.",
+                "إيه العك ده؟ ده حتى البديهيات بتقول غير كدة!",
+                "ركز يا باشا، كدة القطر هيفوتنا!",
+                "لا كدة وسعت منك أوي.. ركز في السؤال.",
+                "غلط! راجع معلوماتك قبل ما الثقة تخدعك.",
+                "ركز بقى، ده آخر إنذار للتركيز!",
+                "غلط تماماً! كدة محتاجين وقفة مع النفس.",
+                "إجابة خارج التوقعات تماماً.. ركز يا بطل.",
+                "لا كدة كتير أوي بجد.. فوق بقى واقرأ كويس!",
+                "ركز يا هندسة، الغلطة هنا بفورة!",
+                "إيه اللي أنت كاتبه ده؟ ده كلام علمي برضه؟ ركز!",
+                "غلط! أنت أكيد بتهزر، ركز بقى شوية.",
+                "لا كدة الموضوع محتاج مذاكرة من أول وجديد.. ركز!",
+                "إجابة كدة وكدة.. بس في الآخر هي غلط! ركز.",
+                "ركز يا وحش عشان نخلص المهمة دي على خير!"
+            ],
             resultsAdvice: [
                 "نتيجتك دى يسطا ولا درجة حرارة.",
                 "منتا لو تبص على التلميحات وأنت بتحل مكنتش جبت درجات الحرارة دى.",
@@ -710,28 +783,28 @@
                 "متزعلش مش مهم درجتك في الامتحان المهم الصحة والستر.",
                 "هيجي شخص يحسسك إنك في كفة والكون كله في كفة وبعدين يسقفلك بالكفتين على وشك علشان النتيجة اللي أنت جايبها دى."
             ],
-           resultsSuccess: [
-    "ما شاء الله عليك يا بطل!",
-    "هايل بجد عاش عليك، استمر.",
-    "شيء جميل جداً عندك أحسن من كده كمان عاش عليك.",
-    "ألف مبروك! إنجاز يستحق التحية والتقدير.",
-    "وحش المجرة! النتيجة دي كأنها لوحة فنية.",
-    "مستوى عالمي.. أنت كدة في حتة تانية خالص.",
-    "عاش يا بطل.. تعبك مجاش على الأرض والنتيجة تشرف.",
-    "برنس بجد! وصلت للهدف بكل ثبات وذكاء.",
-    "أداء أسطوري ملوش مثيل، كمل طريقك للقمة.",
-    "النتيجة دي بتقول إننا قدام مشروع عبقري جديد.",
-    "الله أكبر! مجهود جبار ونتيجة ترفع الرأس.",
-    "أنت النهاردة أثبت إن مفيش مستحيل.. برافو عليك.",
-    "تسلم يا وحش، نتيجة تفرح بجد وتفتح النفس.",
-    "إيه الحلاوة دي؟ النتيجة دي محتاجة حفلة!",
-    "عاش يا هندسة.. أنت فخر لكل اللي حواليك.",
-    "مستوى مبهر وتركيز عالي جداً.. مبروك النجاح.",
-    "أيوة كدة يا فنان.. دي النتيجة اللي تليق بيك.",
-    "عاش يا دحيح! ختمت اللعبة بامتياز.",
-    "مبروك يا بطل.. أنت فعلاً قد المسؤولية وزيادة.",
-    "النتيجة دي مجرد بداية لنجاحات أكبر جاية.. استمر!"
-]
+            resultsSuccess: [
+                "ما شاء الله عليك يا بطل!",
+                "هايل بجد عاش عليك، استمر.",
+                "شيء جميل جداً عندك أحسن من كده كمان عاش عليك.",
+                "ألف مبروك! إنجاز يستحق التحية والتقدير.",
+                "وحش المجرة! النتيجة دي كأنها لوحة فنية.",
+                "مستوى عالمي.. أنت كدة في حتة تانية خالص.",
+                "عاش يا بطل.. تعبك مجاش على الأرض والنتيجة تشرف.",
+                "برنس بجد! وصلت للهدف بكل ثبات وذكاء.",
+                "أداء أسطوري ملوش مثيل، كمل طريقك للقمة.",
+                "النتيجة دي بتقول إننا قدام مشروع عبقري جديد.",
+                "الله أكبر! مجهود جبار ونتيجة ترفع الرأس.",
+                "أنت النهاردة أثبت إن مفيش مستحيل.. برافو عليك.",
+                "تسلم يا وحش, نتيجة تفرح بجد وتفتح النفس.",
+                "إيه الحلاوة دي؟ النتيجة دي محتاجة حفلة!",
+                "عاش يا هندسة.. أنت فخر لكل اللي حواليك.",
+                "مستوى مبهر وتركيز عالي جداً.. مبروك النجاح.",
+                "أيوة كدة يا فنان.. دي النتيجة اللي تليق بيك.",
+                "عاش يا دحيح! ختمت اللعبة بامتياز.",
+                "مبروك يا بطل.. أنت فعلاً قد المسؤولية وزيادة.",
+                "النتيجة دي مجرد بداية لنجاحات أكبر جاية.. استمر!"
+            ]
         };
 
         function clearBebo() {
@@ -879,23 +952,32 @@
             document.getElementById('quiz-container').classList.add('hidden');
             document.getElementById('result-view').classList.remove('hidden');
 
+            const totalQuestions = quizData.length;
             const correctCount = userAns.reduce((acc, choice, i) => {
                 return choice === correctAnswerIndex(quizData[i]) ? acc + 1 : acc;
             }, 0);
-            const wrongCount = quizData.length - correctCount;
-            const pct = Math.round((correctCount / quizData.length) * 100);
+            
+            const wrongCount = totalQuestions - correctCount;
+            const pct = Math.round((correctCount / totalQuestions) * 100);
+            
             const resultMessage = document.getElementById('result-message');
             const resultAccent = document.getElementById('result-accent');
+            const finalScoreDisplay = document.getElementById('finalScoreDisplay');
 
-            document.getElementById('finalScore').innerText = `${pct}%`;
+            // تحديث النسبة المئوية والعدادات
+            finalScoreDisplay.innerText = `${pct}%`;
             document.getElementById('correctCount').innerText = correctCount;
             document.getElementById('wrongCount').innerText = wrongCount;
-            resultAccent.className = `absolute top-0 left-0 w-full h-1 ${pct >= 80 ? 'bg-green-500' : 'bg-red-600'}`;
 
+            // اختيار الرسالة بناءً على الشرط (أكبر من أو يساوي 80%)
             if (pct >= 80) {
-                resultMessage.innerText = beboMessages.resultsSuccess[Math.floor(Math.random() * beboMessages.resultsSuccess.length)];
+                const messagePool = beboMessages.resultsSuccess;
+                resultMessage.innerText = messagePool[Math.floor(Math.random() * messagePool.length)];
+                resultAccent.className = "absolute top-0 left-0 w-full h-1 bg-green-500";
             } else {
-                resultMessage.innerText = beboMessages.resultsAdvice[Math.floor(Math.random() * beboMessages.resultsAdvice.length)];
+                const messagePool = beboMessages.resultsAdvice;
+                resultMessage.innerText = messagePool[Math.floor(Math.random() * messagePool.length)];
+                resultAccent.className = "absolute top-0 left-0 w-full h-1 bg-red-600";
             }
         }
 
